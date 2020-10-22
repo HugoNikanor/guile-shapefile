@@ -1,0 +1,12 @@
+#!/bin/bash
+
+user=hugo.hornquist
+password="$(pass "lantmateriet/$user")"
+
+get () {
+	wget -4 -m --user="$user" --password="$password" "ftp://download-opendata.lantmateriet.se/$1"
+}
+
+get GSD-Sverigekartan_raster
+get GSD-Oversiktskartan_vektor
+get GSD-Sverigekartor_vektor
