@@ -1,0 +1,16 @@
+(define-module (shx)
+  :use-module (shp-header)
+  :use-module (rnrs bytevectors)
+  :use-module (rnrs io ports)
+  :export (parse-shx-file)
+  )
+
+;; mostly here for completeness
+(define (parse-shx-file port)
+  (define header (parse-header (get-bytevector-n port 100)))
+  (define data (get-bytevector-n port (- (shp-header-length header) 100)))
+  (map (lambda (i)
+         (cons (bytevector-sint-ref data       i big 4)
+               (bytevector-sint-ref data (+ i 4) big 4)))
+       (iota (/ (- (shp-header-length header) 100) 8)
+             0 8)))

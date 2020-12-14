@@ -1,6 +1,11 @@
 ;;; https://www.dbase.com/Knowledgebase/INT/db7_file_fmt.htm
 ;; http://web.archive.org/web/20150323061445/http://ulisse.elettra.trieste.it/services/doc/dbase/DBFstruct.htm
 
+(define-module (dbase)
+  :use-module (common)
+  :export (load-dbase-file)
+  )
+
 (import (rnrs (6)))
 
 (use-modules (rnrs io ports)
@@ -13,15 +18,6 @@
              )
 
 
-(define big (endianness big))
-(define little (endianness little))
-
-;; bv[from:to]. From inclusive, to exclusive
-(define* (bytevector-slice bv from #:optional (to (1- (bytevector-length bv))))
-  (define count (- to from))
-  (let ((nbv (make-bytevector count)))
-    (bytevector-copy! bv from nbv 0 count)
-    nbv))
 
 
 
@@ -63,7 +59,8 @@
 
   (make-dbase-header
    version date record-count bytes-in-header bytes-in-record
-   ))
+   )
+  )
 
 ;; C: character
 ;; D: date (YYYYMMDD)
@@ -200,25 +197,15 @@
 
 
  (define v (make-vector (dbase-header-record-count header)))
- (for-each (lambda (i) (vector-set! v i (parser (get-bytevector-n port (dbase-header-bytes-in-record header)))))
+ (for-each (lambda (i) (vector-set!
+                   v i
+                   (parser
+                    (get-bytevector-n
+                     port
+                     (dbase-header-bytes-in-record header)))))
            (iota (dbase-header-record-count header)))
  v
 
 
   )
 
-
-(define (main transcoder)
- (define port (open-input-file
-               (string-append path "/vl_riks.dbf")))
-
- (load-dbase-file port transcoder)
- )
-
-
-;; (define f (open-output-file "/tmp/lines"))
-;; (vector-for-each
-;;  (lambda (record)
-;;    (display (list-ref record 2) f)
-;;    (newline f))
-;;  v)
