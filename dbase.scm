@@ -204,7 +204,7 @@
                      port
                      (dbase-header-bytes-in-record header)))))
            (iota (dbase-header-record-count header)))
- v
+ (values field-descriptors v)
 
 
   )

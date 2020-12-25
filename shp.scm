@@ -75,15 +75,15 @@
       (let loop ((rem points)
                  (take (map (lambda (args) (apply - args))
                             (zip (cons num-points lst) lst))))
-        (format #t "take=~s rem=~s ~s ~s~%"
-                take rem (null? take) (null? rem))
+        ;; (format #t "take=~s rem=~s ~s ~s~%"
+        ;;         take rem (null? take) (null? rem))
         (set! lll rem)
         (if (null? rem)
             '()
             (call-with-values (lambda () (split-at rem (car take)))
               (lambda (head tail)
-                (format #t "head=~a tail=~a~%"
-                        head tail)
+                ;; (format #t "head=~a tail=~a~%"
+                ;;         head tail)
                 (cons head (loop tail (cdr take)))))))))
 
   (make-poly-line box parts))
