@@ -132,6 +132,15 @@
           set-fields-flag
           ))
 
+(export
+ field-descriptor-v3-name
+ field-descriptor-v3-type
+ field-descriptor-v3-length
+ field-descriptor-v3-decimal-count
+ field-descriptor-v3-work-area-id
+ field-descriptor-v3-set-fields-flag
+ )
+
 (create-printer field-descriptor-v3)
 
 (define (parse-field-descriptor-v3 bv)

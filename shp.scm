@@ -142,7 +142,9 @@
 
 
 (define (get-parser symbol)
-  (assoc-ref parsers symbol))
+  (or (assoc-ref parsers symbol)
+      (throw 'not-implemented
+             "Parser ~a not yet implemented" symbol)))
 
 
 (define (parse-shp-file port)
@@ -165,6 +167,6 @@
                  (cons ((get-parser type) data 4)
                        (loop (- remaining-length 8 record-length)))]
                 [else
-                 (raise 'something)])))))
+                 (throw 'something)])))))
 
 
