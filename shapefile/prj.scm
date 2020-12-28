@@ -1,4 +1,4 @@
-(define-module (prj)
+(define-module (shapefile prj)
   :use-module (ice-9 peg)
   :use-module (ice-9 match)
   :export (parse-prj-string))
@@ -35,7 +35,11 @@
     (('record name body ...)
      `(,(string->symbol name)
        ,@(map parse-tree (keyword-flatten '(string record number)
-                                      body))))))
+                                          body))))
+    (dflt
+     (display dflt (current-error-port))
+     (newline (current-error-port))
+     )))
 
 
 

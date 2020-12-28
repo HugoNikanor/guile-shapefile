@@ -1,5 +1,5 @@
-(define-module (shp-header)
-  :use-module (common)
+(define-module (shapefile shp-header)
+  :use-module (shapefile common)
   :use-module (rnrs records syntactic)
   :use-module (rnrs bytevectors)
   :use-module ((srfi srfi-1) :select (iota))

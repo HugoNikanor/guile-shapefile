@@ -26,3 +26,21 @@ https://en.wikipedia.org/wiki/Shapefile
 shp - shape format, the feauter geomtry itself
 shx - shape index format
 dbf - attribute format
+
+https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/sverigekartor/#steg=1
+
+my - markyta
+ak - kommuner
+ny - nationalpark (yta?)
+nl - nationalpark
+tx - text?
+al - avgränsnare (linje) - riksgräns, komungräns ...
+an - län (area)
+bt - 
+jl - järnvägar (linjer)
+ul - odlingsgränser + fljälllinjer
+ml - markyta (+ utomlands)
+vl - vägar
+mb - tätorter
+bs - kyrkor, slott och fyrer
+hl - vattendrag

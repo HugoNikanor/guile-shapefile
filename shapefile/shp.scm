@@ -1,21 +1,17 @@
 ;;; https://en.wikipedia.org/wiki/Shapefile
 ;;; https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf
 
-(define-module (shp)
-  :use-module (shp-header)
-  :use-module (common)
+(define-module (shapefile shp)
+  :use-module (shapefile shp-header)
+  :use-module (shapefile common)
   )
 
 (import (rnrs (6)))
 
 (use-modules (rnrs io ports)
              (rnrs bytevectors)
-             ((srfi srfi-1)
-              :select (iota split-at zip))
-             (rnrs records syntactic)
-             ;; (rnrs records inspection)
-             ;; (rnrs records procedural)
-             )
+             ((srfi srfi-1) :select (iota split-at zip))
+             (rnrs records syntactic))
 
 (module-export-all! (current-module))
 

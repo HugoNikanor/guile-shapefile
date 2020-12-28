@@ -1,8 +1,8 @@
 ;;; https://www.dbase.com/Knowledgebase/INT/db7_file_fmt.htm
 ;; http://web.archive.org/web/20150323061445/http://ulisse.elettra.trieste.it/services/doc/dbase/DBFstruct.htm
 
-(define-module (dbase)
-  :use-module (common)
+(define-module (shapefile dbase)
+  :use-module (shapefile common)
   :export (load-dbase-file)
   )
 
@@ -12,6 +12,7 @@
              (rnrs bytevectors)
              (srfi srfi-1)
              (rnrs records syntactic)
+
              (rnrs records inspection)
              (rnrs records procedural)
              ((srfi srfi-9 gnu) :select (set-record-type-printer!))

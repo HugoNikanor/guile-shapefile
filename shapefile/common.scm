@@ -1,4 +1,4 @@
-(define-module (common)
+(define-module (shapefile common)
   :use-module (rnrs records inspection)
   :use-module ((rnrs records procedural)
                :select (record-accessor))
