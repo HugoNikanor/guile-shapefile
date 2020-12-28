@@ -55,7 +55,7 @@
 
 (define lll #f)
 
-(define (parse-poly-line data offset)
+(define (parse-poly-* constructor data offset)
   (define box (parse-rectangle data offset))
   (define num-parts (bytevector-sint-ref data (+ offset (* 8 4))
                                          little offset))
@@ -86,16 +86,22 @@
                 ;;         head tail)
                 (cons head (loop tail (cdr take)))))))))
 
-  (make-poly-line box parts))
+  (constructor box parts))
 
+(define (parse-poly-line data offset)
+  (parse-poly-* make-poly-line data offset))
 
 (define-record-type polygon
   (fields box ; <rectangle>
-          num-parts ; integer
-          num-points ; integer
+          ;; num-parts ; integer
+          ;; num-points ; integer
           parts ; integer[num-parts]
-          points ; points[num-points]
+          ;; points ; points[num-points]
           ))
+(create-printer polygon)
+
+(define (parse-polygon data offset)
+  (parse-poly-* make-polygon data offset))
 
 (define-record-type point-m
   (fields x y m) ; doubles
@@ -137,7 +143,11 @@
 
 
 (define parsers
-  `((poly-line . ,parse-poly-line))
+  `((poly-line . ,parse-poly-line)
+    (polygon . ,parse-polygon)
+    (point . ,parse-point)
+    (multi-point . ,parse-multi-point)
+    )
   )
 
 
