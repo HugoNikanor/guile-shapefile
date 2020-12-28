@@ -8,7 +8,7 @@
 (module-export-all! (current-module))
 
 (define-record-type rectangle
-  (fields x-min x-max y-min y-max))
+  (fields x-min y-min x-max y-max))
 (create-printer rectangle)
 
 (define (parse-rectangle bytevector offset)
