@@ -9,9 +9,11 @@
 
 (define (resolve-codepage name)
   (make-transcoder
-   (cond [(string-contains name "8859") (latin-1-codec)]
-         [(string-contains name "16") (utf-16-codec)]
-         [(string-contains name "8") (utf-8-codec)]
+   ;; TODO I have no idea if these are correct
+   ;; All files I have are marked 'ISO 88591'
+   (cond [(string-contains name "ISO 8859") (latin-1-codec)]
+         [(string-contains name "UTF 16") (utf-16-codec)]
+         [(string-contains name "UTF 8") (utf-8-codec)]
          [else #| warn here |#
           (format (current-error-port)
                   "Warning, couldn't read codepage from ~a~%"
