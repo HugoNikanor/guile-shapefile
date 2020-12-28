@@ -58,9 +58,9 @@
 (define (parse-poly-* constructor data offset)
   (define box (parse-rectangle data offset))
   (define num-parts (bytevector-sint-ref data (+ offset (* 8 4))
-                                         little offset))
-  (define num-points (bytevector-sint-ref data (+ offset (* 9 4))
-                                          little offset))
+                                         little 4))
+  (define num-points (bytevector-sint-ref data (+ offset (* 8 4) 4)
+                                          little 4))
   (define part-indices
     (map (lambda (i) (bytevector-sint-ref data i little 4))
          (iota num-parts (+ offset (* 10 4)) 4)))
@@ -73,8 +73,8 @@
   (define parts
     (let ((lst (reverse part-indices)))
       (let loop ((rem points)
-                 (take (map (lambda (args) (apply - args))
-                            (zip (cons num-points lst) lst))))
+                 (take (reverse (map (lambda (args) (apply - args))
+                                     (zip (cons num-points lst) lst)))))
         ;; (format #t "take=~s rem=~s ~s ~s~%"
         ;;         take rem (null? take) (null? rem))
         (set! lll rem)
@@ -85,6 +85,9 @@
                 ;; (format #t "head=~a tail=~a~%"
                 ;;         head tail)
                 (cons head (loop tail (cdr take)))))))))
+
+  ;; NOTE the first and last point must be the same.
+  ;; possibly verify this here
 
   (constructor box parts))
 
