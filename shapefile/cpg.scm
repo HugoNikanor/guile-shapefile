@@ -4,7 +4,7 @@
                         latin-1-codec
                         utf-8-codec
                         utf-16-codec))
-  :export (resolve-codepage))
+  :export (resolve-codepage parse-cpg-file))
 
 
 (define (resolve-codepage name)
@@ -19,3 +19,7 @@
                   "Warning, couldn't read codepage from ~a~%"
                   name)
           (latin-1-codec)])))
+
+
+(define (parse-cpg-file port)
+  (resolve-codepage ((@ (ice-9 rdelim) read-line) port)))

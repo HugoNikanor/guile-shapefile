@@ -3,20 +3,24 @@
 
 (define-module (shapefile dbase)
   :use-module (shapefile common)
+  :use-module ((rnrs io ports)
+               :select (bytevector->string
+                        get-bytevector-n
+                        native-transcoder))
+  :use-module ((rnrs bytevectors)
+               :select (bytevector-uint-ref
+                        bytevector-u8-ref))
+  :use-module (rnrs records syntactic)
+
+  ;; (rnrs records inspection)
+  :use-module ((rnrs records procedural)
+               :version (6)
+               :select (make-record-type-descriptor))
+
   :export (load-dbase-file)
   )
 
-(import (rnrs (6)))
 
-(use-modules (rnrs io ports)
-             (rnrs bytevectors)
-             (srfi srfi-1)
-             (rnrs records syntactic)
-
-             (rnrs records inspection)
-             (rnrs records procedural)
-             ((srfi srfi-9 gnu) :select (set-record-type-printer!))
-             )
 
 
 

@@ -8,8 +8,13 @@
 
 (import (rnrs (6)))
 
-(use-modules (rnrs io ports)
-             (rnrs bytevectors)
+(use-modules ((rnrs io ports) :select (get-bytevector-n))
+             ((rnrs bytevectors)
+              :select (bytevector-ieee-double-ref
+                       bytevector-sint-ref
+                       ; bytevector-uint-ref
+                       )
+              )
              ((srfi srfi-1) :select (iota split-at zip))
              (rnrs records syntactic))
 

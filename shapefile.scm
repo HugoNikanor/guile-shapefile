@@ -31,6 +31,7 @@
 (define-record-type record
   (fields shape data)
   )
+
 (create-printer record)
 
 (define (extension filename)
@@ -64,10 +65,7 @@
 
   (define transcoder
     (cond [(assoc-ref file-map 'cpg)
-           => (lambda (it)
-                (resolve-codepage
-                 (call-with-input-file it
-                   (@ (ice-9 rdelim) read-line))))]
+           => (lambda (it) (call-with-input-file it parse-cgp-file))]
           [else ((@ (rnrs io ports) native-transcoder))]))
 
 
@@ -81,9 +79,9 @@
   (define-values (dbf-fields dbf-records*)
    (call-with-input-file dbf-file
      (lambda (port)
-       (display dbf-file) (newline)
-       (display port) (newline)
-       (display transcoder) (newline)
+       ;; (display dbf-file) (newline)
+       ;; (display port) (newline)
+       ;; (display transcoder) (newline)
        (load-dbase-file port transcoder))))
 
   (define dbf-records
@@ -98,11 +96,8 @@
   (define shape-data (call-with-input-file shp-file parse-shp-file))
 
   (define projection
-    (cond [(assoc-ref file-map 'cpg)
-           => (lambda (it)
-                (parse-prj-string
-                 (with-input-from-file it
-                   (lambda () ((@ (ice-9 rdelim) read-delimited) "")))))]
+    (cond [(assoc-ref file-map 'prj)
+           => (lambda (it) (call-with-input-file it parse-prj-file))]
           [else #f]))
 
   ;; we completely ignore the shx file, since it's not needed.

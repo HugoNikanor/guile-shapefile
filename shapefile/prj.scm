@@ -43,5 +43,6 @@
 
 
 
-(define (parse-prj-string string)
+(define (parse-prj-string port)
+  (define string ((@ (ice-9 rdelim) read-delimited) "" port))
   (parse-tree (peg:tree (match-pattern record string))))

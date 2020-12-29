@@ -1,7 +1,9 @@
 (define-module (shapefile shp-header)
   :use-module (shapefile common)
   :use-module (rnrs records syntactic)
-  :use-module (rnrs bytevectors)
+  :use-module ((rnrs bytevectors)
+               :select (bytevector-ieee-double-ref
+                        bytevector-sint-ref))
   :use-module ((srfi srfi-1) :select (iota))
   )
 
