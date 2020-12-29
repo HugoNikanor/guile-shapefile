@@ -1,5 +1,5 @@
-(define-module (shapefile shp-header)
-  :use-module (shapefile common)
+(define-module (shapefile internal shp-header)
+  :use-module (shapefile internal common)
   :use-module (rnrs records syntactic)
   :use-module ((rnrs bytevectors)
                :select (bytevector-ieee-double-ref

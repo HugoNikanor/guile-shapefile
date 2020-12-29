@@ -2,7 +2,7 @@
 ;; http://web.archive.org/web/20150323061445/http://ulisse.elettra.trieste.it/services/doc/dbase/DBFstruct.htm
 
 (define-module (shapefile dbase)
-  :use-module (shapefile common)
+  :use-module (shapefile internal common)
   :use-module ((rnrs io ports)
                :select (bytevector->string
                         get-bytevector-n

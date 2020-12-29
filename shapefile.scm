@@ -4,7 +4,7 @@
   :use-module (shapefile cpg)
   :use-module (shapefile prj)
 
-  :use-module (shapefile common)
+  :use-module (shapefile internal common)
 
   :use-module ((ice-9 ftw) :select (scandir))
 

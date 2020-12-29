@@ -1,4 +1,4 @@
-(define-module (shapefile common)
+(define-module (shapefile internal common)
   :use-module ((rnrs records inspection)
                :select (record-type-name
                         record-type-parent

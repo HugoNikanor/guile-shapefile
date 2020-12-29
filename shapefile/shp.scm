@@ -1,10 +1,19 @@
-;;; https://en.wikipedia.org/wiki/Shapefile
-;;; https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf
-
 (define-module (shapefile shp)
-  :use-module (shapefile shp-header)
-  :use-module (shapefile common)
-  )
+  :use-module (shapefile internal shp-header)
+  :use-module (shapefile internal common)
+
+  :re-export (make-rectangle
+              rectangle?
+              rectangle-x-min rectangle-x-max
+              rectangle-y-min rectangle-y-max
+              parse-rectangle)
+  :export (parse-shp-file
+           get-bounding-box get-parts
+           make-point point? point-x point-y parse-point
+           make-multi-point multi-point? parse-multi-point
+           make-poly-line poly-line? parse-poly-line
+           make-polygon polygon? parse-polygon
+           ))
 
 (import (rnrs (6)))
 
@@ -18,7 +27,7 @@
              ((srfi srfi-1) :select (iota split-at zip))
              (rnrs records syntactic))
 
-(module-export-all! (current-module))
+;; (module-export-all! (current-module))
 
 
 
@@ -33,6 +42,7 @@
   (apply make-point
          (map (lambda (i) (bytevector-ieee-double-ref bv i little))
               (iota 2 offset 8))))
+
 
 (define-record-type multi-point
   (fields box ; rectangle
@@ -184,3 +194,15 @@
                  (throw 'something)])))))
 
 
+
+(define (get-bounding-box shape)
+  (cond ((polygon? shape) (polygon-box shape))
+        ((poly-line? shape) (poly-line-box shape))
+        ((multi-point? shape) (multi-point-box shape))
+        (else (throw 'type-error))))
+
+(define (get-parts shape)
+  (cond ((polygon? shape) (polygon-parts shape))
+        ((poly-line? shape) (poly-line-parts shape))
+        ((multi-point? shape) (multi-point-points shape))
+        (else (throw 'type-error))))

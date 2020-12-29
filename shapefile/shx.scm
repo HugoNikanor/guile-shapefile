@@ -1,5 +1,6 @@
 (define-module (shapefile shx)
-  :use-module (shapefile shp-header)
+  :use-module ((shapefile internal shp-header)
+               :select (parse-header shp-header-length))
   :use-module (rnrs bytevectors)
   :use-module (rnrs io ports)
   :use-module ((srfi srfi-1) :select (iota))
