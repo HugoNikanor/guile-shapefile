@@ -12,7 +12,18 @@
   :use-module ((srfi srfi-1) :select (last))
   :use-module ((ice-9 regex) :select (string-match))
 
-  :export (read-shapefile)
+  :export (read-shapefile
+           create-shapefile
+           shapefile?
+           shapefile-transcoder
+           shapefile-projection
+           shapefile-records
+
+           record?
+           make-record
+           record-shape
+           record-data
+           )
   )
 
 (define-record-type shapefile
@@ -74,24 +85,11 @@
   (define shx-file (assoc-ref file-map 'shx))
   (define dbf-file (assoc-ref file-map 'dbf))
 
-  ;; Type dbf-recods := (vector (list))
-  ;; Type dbf-fields := (list field-descriptor-v3)
-  (define-values (dbf-fields dbf-records*)
-   (call-with-input-file dbf-file
-     (lambda (port)
-       ;; (display dbf-file) (newline)
-       ;; (display port) (newline)
-       ;; (display transcoder) (newline)
-       (load-dbase-file port transcoder))))
-
   (define dbf-records
-    (map (lambda (record)
-           (map cons
-                (map (compose string->symbol field-descriptor-v3-name)
-                     dbf-fields)
-                ;; remove leading bool (deletion indicator)
-                (cdr record)))
-         (vector->list dbf-records*)))
+    (call-with-values
+        (lambda () (call-with-input-file dbf-file
+                (lambda (port) (load-dbase-file port transcoder))))
+      dbase-build-assoc-list))
 
   (define shape-data (call-with-input-file shp-file parse-shp-file))
 

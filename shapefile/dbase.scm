@@ -17,7 +17,16 @@
                :version (6)
                :select (make-record-type-descriptor))
 
-  :export (load-dbase-file)
+  :export (load-dbase-file
+           dbase-build-assoc-list
+
+           field-descriptor-v3-name
+           field-descriptor-v3-type
+           field-descriptor-v3-length
+           field-descriptor-v3-decimal-count
+           field-descriptor-v3-work-area-id
+           field-descriptor-v3-set-fields-flag
+           )
   )
 
 
@@ -137,15 +146,6 @@
           set-fields-flag
           ))
 
-(export
- field-descriptor-v3-name
- field-descriptor-v3-type
- field-descriptor-v3-length
- field-descriptor-v3-decimal-count
- field-descriptor-v3-work-area-id
- field-descriptor-v3-set-fields-flag
- )
-
 (create-printer field-descriptor-v3)
 
 (define (parse-field-descriptor-v3 bv)
@@ -218,8 +218,14 @@
                      port
                      (dbase-header-bytes-in-record header)))))
            (iota (dbase-header-record-count header)))
- (values field-descriptors v)
+ (values field-descriptors v))
 
-
-  )
+(define (dbase-build-assoc-list dbf-headers dbf-record-vector)
+  (map (lambda (record)
+         (map cons
+              (map (compose string->symbol field-descriptor-v3-name)
+                   dbf-headers)
+              ;; remove leading bool (deletion indicator)
+              (cdr record)))
+       (vector->list dbf-record-vector)))
 
