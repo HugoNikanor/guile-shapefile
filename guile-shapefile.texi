@@ -60,6 +60,7 @@ The shp and dbf files are @emph{required} to exist
 @end defun
 
 @deftp {Data Type} shapefile transcoder projection records
+@anchor{shapefile}
 @var{transcoder} and @var{projection} is the data from the cpg and prj
 files read directly as noted in @ref{cpg - Codepage} and @ref{prj - Projection Information}.
 
@@ -199,6 +200,9 @@ unused in the code.
 
 The @code{prj} files contains information about the map projection.
 
+For example
+@footnote{Data from Lantmäteriet, @xref{Lantmäteriet}}
+
 @example
 PROJCS["SWEREF99_TM",GEOGCS["GCS_SWEREF99",DATUM["D_SWEREF99",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",15.0],PARAMETER["Scale_Factor",0.9996],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]]
 @end example
@@ -261,6 +265,7 @@ Reads name of a codepage from @var{port}, and resolves it with
 @end defun
 
 @defun resolve-codepage name
+@cindex transcoder
 Returns a @code{(rnrs io ports)} transcoder.
 
 Checks if string @var{name} contains ``ISO 8859'', ``UTF 16'', or ``UTF 8'',
@@ -274,7 +279,54 @@ and returns transcoder depending on its finds.  Defaults to Latin-1.
 Contains auxiliary information about the shapes in the shp file. With
 one record per shape.
 
-@c TODO TODO
+Wikipedia claims that the DBase files should be Version IV
+@footnote{@url{https://en.wikipedia.org/wiki/Shapefile#Shapefile_attribute_format_(.dbf)}}.
+The files I have however all use DBase version 3, therefor that is
+what is supported in the code.
+
+@defun load-dbase-file port transcoder
+@var{port} is an open input port which the data will be read from.
+@var{transcoder} is an @code{(rnrs io base)} transcoder, which
+signifies which charset the data has.
+
+Returns two values.
+A list of field descriptors @xref{field-descriptor-v3}, and
+a vector of records.
+@end defun
+
+Each record is a list list on the form @code{(bool data ...)}, where
+@var{bool} is whether or not the record is removed (@code{#t} for
+removed, @code{#f} if still there). The remaining data fields
+corresponds directly to the fields in the field descriptor list.
+
+However, usually you don't want to deal with the data that way.
+
+@defun dbase-build-assoc-list dbf-headers dbf-record-vector
+
+Takes the headers and data returned by @code{load-dbase-file}, and
+instead returns a list of association lists. One assoc list per
+record (leading boolean removed), with the @code{car}s being the field
+names as symbols, and the @code{cdr}s being the values.
+
+Example:
+@lisp
+(call-with-values (λ () (load-dbase-file port transcoder))
+  dbase-build-assoc-list)
+@end lisp
+@end defun
+
+Dynamically defining record types, and returning instances would be
+fancier. However, the utilities for record introspection are lacking,
+leading to the programmer needing to know the form of the generated
+records beforehand, defeating the point.
+
+@deftp {Data Type} field-descriptor-v3 name type length decimal-count work-area-id set-fields-flag
+@anchor{field-descriptor-v3}
+@var{name} is the name of the field.
+@var{type} signifies the type of the field, usually unneeded since the
+values are converted to proper scheme types when reading.
+See some official reference for proper information.
+@end deftp
 
 @node Other
 @chapter Other
@@ -296,6 +348,11 @@ Exported by @code{(shapefile shp)}. Used for bounding boxes.
 
 @node Examples
 @chapter Examples
+
+@node Lantmäteriet
+@section Lantmäteriet
+
+@c TODO copyright (CC) notice
 
 Some example data can be fetched from the Swedish National Land Survey (Lantmäteriet).
 @url{https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/sverigekartor/}
@@ -352,5 +409,7 @@ vattendrag
 @unnumbered Index
 @printindex cp
 @printindex fn
+@printindex tp
+@printindex vr
 
 @bye
