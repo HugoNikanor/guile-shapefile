@@ -1,7 +1,7 @@
 (define-module (shapefile prj)
   :use-module (ice-9 peg)
   :use-module (ice-9 match)
-  :export (parse-prj-string))
+  :export (parse-prj-file))
 
 (define-peg-pattern string all
   (and (ignore "\"")
@@ -43,6 +43,6 @@
 
 
 
-(define (parse-prj-string port)
+(define (parse-prj-file port)
   (define string ((@ (ice-9 rdelim) read-delimited) "" port))
   (parse-tree (peg:tree (match-pattern record string))))

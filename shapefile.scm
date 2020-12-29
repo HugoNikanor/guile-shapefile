@@ -65,7 +65,7 @@
 
   (define transcoder
     (cond [(assoc-ref file-map 'cpg)
-           => (lambda (it) (call-with-input-file it parse-cgp-file))]
+           => (lambda (it) (call-with-input-file it parse-cpg-file))]
           [else ((@ (rnrs io ports) native-transcoder))]))
 
 
