@@ -1,0 +1,356 @@
+\input texinfo
+@settitle Guile Shapefile
+
+@c TODO note module name for all parts
+
+@copying
+@c TODO licencse?
+
+Copyright @copyright{} 2020 Hugo Hörnquist
+@end copying
+
+@titlepage
+@title Guile Shapefile
+@author Hugo Hörnquist
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c Table of Contents
+@contents
+
+@ifnottex
+@node Top
+@top Guile Shapefile
+@end ifnottex
+
+Guile shapefile attempts to read and parse shapefile. As a library, it
+doesn't attempt @emph{do} anything with them (however, @xref{Examples})
+
+It currently doesn't support writing back to disk.
+
+@c @menu
+@c * shapefile::
+@c @c * copying::
+@c * index::
+@c @end menu
+
+@node Shapefile
+@chapter Shapefile
+
+@cindex shapefile
+
+Each shapefile is spread over a number of different files, each
+containing part of the whole data. More information can be found on
+@url{https://en.wikipedia.org/wiki/Shapefile,Wikipedia} and in the
+@url{https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf,whitepaper}.
+
+The main interface for loading shapefiles is
+
+@defun read-shapefile path
+@var{path} is a search path without an extension. This due to the data
+being spread over multiple files.
+Returns a @code{shapefile} object.
+
+The shp and dbf files are @emph{required} to exist
+@footnote{The shx file is also required by the spec to exist,
+              but here we ignore it}
+@end defun
+
+@deftp {Data Type} shapefile transcoder projection records
+@var{transcoder} and @var{projection} is the data from the cpg and prj
+files read directly as noted in @ref{cpg - Codepage} and @ref{prj - Projection Information}.
+
+@var{records} is a list of @code{record} records.
+@end deftp
+
+@defun shapefile? shapefile
+@end defun
+
+@defun shapefile-transcoder shapefile
+@end defun
+
+@defun shapefile-projection shapefile
+@end defun
+
+@defun shapefile-records shapefile
+@end defun
+
+@defun create-shapefile [#:transcoder] [#:projection] [#:records]
+Alternative constructor to the ``regular'' @code{make-shapefile}.
+Each keyword argument is optional, and defaults to @code{#f}. No
+responsibility is taken if @emph{someonee} were to create a shapefile
+without a records list.
+
+@c TODO possibly give sensible befaults for transcoder and records.
+@end defun
+
+@deftp {Data Type} record shape data
+@var{shape} is a shape record as read from the shp file.
+@var{data} Is a dbf record, as read from the dbf file.
+@end deftp
+
+@node shp - Shape Data
+@section shp - Shape Data
+@cindex shp
+
+Each shape file contains a list of shapes. All shapes are of the same
+type (or the null shape).
+
+All shapes define the @code{make-@emph{shape}},
+@code{parse-@emph{shape}}, and @code{@emph{shape}?}.
+@code{make-@emph{shape}} and @code{@emph{shape}?} are self
+explanatory. Each @code{parse-@emph{shape}} takes a bytevector, and a
+byte offset into that vector, and reads from the vector creating a
+shape. However, you usually don't want to call the parse procedures
+directly, but instead use
+
+@defun parse-shp-file port
+Reads shapedata from @var{port}. The data must start with a propper
+shp header.
+
+Returns a list of shapes, as defined below.
+@end defun
+
+The following generic procedures are also available, in lie of
+individual getters.
+
+@defun get-bounding-box shape
+Returns the (minimum?) bounding box for @var{shape}, which is any of
+the shape types which have a bounding box.
+
+@xref{Rectangle}
+@end defun
+
+@defun get-parts shape
+For poly-lines and polygons, return the list of parts.
+
+For multi-points, return the list of points.
+@end defun
+
+
+@c @code{*-m}-variants
+@c @code{*-z}-variants
+
+@subsection point
+
+@deftp {Data Type} point x y
+@anchor{point}
+@end deftp
+
+@defun point? point
+@end defun
+
+@defun make-point x y
+@end defun
+
+@defun point-x point
+@end defun
+
+@defun point-y point
+@end defun
+
+@defun parse-point bytevector offset
+@end defun
+
+@subsection multi point
+
+@deftp {Data Type} multi-point box points
+A group of points.
+@var{box} is the (minimum?) bounding box which all points lie within.
+@var{points} is a list of points. @ref{point}
+@end deftp
+
+@defun parse-multi-point bytevector offset
+@end defun
+
+@subsection poly-line & polygon
+
+@deffn {Data Type} poly-line box parts
+@deffnx {Data Type} polygon box parts
+Poly-lines and polygons are really similar structures.
+@var{box} is in both cases the (minimum?) bounding box containing
+all nodes of the shape.
+@var{parts} is a list of parts, where each part is a list of points.
+Each part is a connected series of points (draw lines between
+them). For polygons, the first and last point @emph{must} be the same.
+
+@c TODO multiple parts. Clockwise vs counter clockwise
+@c Union vs difference.
+@end deffn
+
+@deffn {Function} parse-poly-line bytevector offset
+@deffnx {Function} parse-polygon bytevector offset
+@end deffn
+
+@node shx - Shape Index
+@section shx - Shape Index
+@cindex shx
+
+Index file with fixed width records for the accompanying shp file
+(which has variable width records). A parser is provided, but goes
+unused in the code.
+
+@node prj - Projection Information
+@section prj - Projection Information
+@cindex prj
+
+The @code{prj} files contains information about the map projection.
+
+@example
+PROJCS["SWEREF99_TM",GEOGCS["GCS_SWEREF99",DATUM["D_SWEREF99",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",15.0],PARAMETER["Scale_Factor",0.9996],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]]
+@end example
+
+Which pretty printed becomes.
+
+@example
+PROJCS[
+	"SWEREF99_TM",
+	GEOGCS[
+		"GCS_SWEREF99",
+		DATUM["D_SWEREF99",SPHEROID["GRS_1980",6378137.0,298.257222101]],
+		PRIMEM["Greenwich",0.0],
+		UNIT["Degree",0.0174532925199433]
+	],
+	PROJECTION["Transverse_Mercator"],
+	PARAMETER["False_Easting",500000.0],
+	PARAMETER["False_Northing",0.0],
+	PARAMETER["Central_Meridian",15.0],
+	PARAMETER["Scale_Factor",0.9996],
+	PARAMETER["Latitude_Of_Origin",0.0],
+	UNIT["Meter",1.0]
+]
+@end example
+
+The parser currently only handles the compact version, and produces
+the following S-expression.
+
+@example
+(PROJCS
+  "SWEREF99_TM"
+  (GEOGCS
+    "GCS_SWEREF99"
+    (DATUM "D_SWEREF99"
+           (SPHEROID "GRS_1980" 6378137.0 298.257222101))
+    (PRIMEM "Greenwich" 0.0)
+    (UNIT "Degree" 0.0174532925199433))
+  (PROJECTION "Transverse_Mercator")
+  (PARAMETER "False_Easting" 500000.0)
+  (PARAMETER "False_Northing" 0.0)
+  (PARAMETER "Central_Meridian" 15.0)
+  (PARAMETER "Scale_Factor" 0.9996)
+  (PARAMETER "Latitude_Of_Origin" 0.0)
+  (UNIT "Meter" 1.0))
+@end example
+
+@defun parse-prj-file port
+Reads projection data from port, returing sexp as above.
+@end defun
+
+@node cpg - Codepage
+@section cpg - Codepage
+@cindex cpg
+
+The codepage for the dbf file.
+
+@defun parse-cpg-file port
+Reads name of a codepage from @var{port}, and resolves it with
+@code{resolve-codepage}. Returns a @code{(rnrs io ports)} transcoder.
+@end defun
+
+@defun resolve-codepage name
+Returns a @code{(rnrs io ports)} transcoder.
+
+Checks if string @var{name} contains ``ISO 8859'', ``UTF 16'', or ``UTF 8'',
+and returns transcoder depending on its finds.  Defaults to Latin-1.
+@end defun
+
+@node dbf - Database
+@section dbf - Database
+@cindex dbf
+
+Contains auxiliary information about the shapes in the shp file. With
+one record per shape.
+
+@c TODO TODO
+
+@node Other
+@chapter Other
+
+@node Rectangle
+@section Rectangle
+@cindex Rectangle
+
+Exported by @code{(shapefile shp)}. Used for bounding boxes.
+
+@deftp {Data Type} rectangle x-min y-min x-max y-max
+@end deftp
+
+@defun make-rectangle x-min y-min x-max y-ma
+@end defun
+
+@defun rectangle? rectangle
+@end defun
+
+@node Examples
+@chapter Examples
+
+Some example data can be fetched from the Swedish National Land Survey (Lantmäteriet).
+@url{https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/sverigekartor/}
+
+@table @samp
+@item my
+markyta
+
+@item ak
+kommuner
+
+@item ny
+nationalpark (yta?)
+
+@item nl
+nationalpark
+
+@item tx
+text?
+
+@item al
+avgränsnare (linje)
+riksgräns, komungräns ...
+
+@item an
+län (area)
+
+@item bt
+
+
+@item jl
+järnvägar (linjer)
+
+@item ul
+odlingsgränser + fljälllinjer
+
+@item ml
+markyta (+ utomlands)
+
+@item vl
+vägar
+
+@item mb
+tätorter
+
+@item bs
+kyrkor, slott och fyrer
+
+@item hl
+vattendrag
+@end table
+
+@node Index
+@unnumbered Index
+@printindex cp
+@printindex fn
+
+@bye
