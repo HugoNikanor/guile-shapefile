@@ -35,6 +35,9 @@ ccache/%.go: %.scm
 %.info: %.texi
 	makeinfo $<
 
+# docs are for github pages.
+# But can of course be used for other stuff also
+
 %.svg: $(wildcard sample-data/an_riks.*)
 	env GUILE_LOAD_PATH=. examples/to-svg.scm \
 		--file riks/an_riks \
@@ -43,5 +46,6 @@ ccache/%.go: %.scm
 docs/%.png: %.svg
 	inkscape --export-filename=$@ $<
 
-docs: $(TEXI_FILES) docs/an_riks.png
+docs: $(TEXI_FILES) docs/an_riks.png LICENSE
+	ln -s docs/an_riks.png
 	makeinfo --html guile-shapefile.texi -o $@
