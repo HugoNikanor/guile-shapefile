@@ -11,7 +11,7 @@ Examples
 		--file riks/an_riks \
 		--height 300
 
-[![Swedish counties](an_riks.svg)](an_riks.svg)
+[![Swedish counties](an_riks.svg)](//raw.githubusercontent.com/HugoNikanor/guile-shapefile/master/an_riks.svg)
 
 *Hover to show names doesn't work for inline image, click image to get
 interaction*
