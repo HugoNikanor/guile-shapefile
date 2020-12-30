@@ -26,7 +26,7 @@ for-package: $(GO_FILES) $(INFO_FILES)
 
 install: $(GO_FILES) $(INFO_FILES)
 	install -d $(DESTDIR)/$(CCACHEDIR)/
-	cp -a ccache/ $(DESTDIR)/$(CCACHEDIR)/
+	cp -a ccache/* $(DESTDIR)/$(CCACHEDIR)/
 	install -m 644 -D -t $(DESTDIR)/$(SITEDIR)/ shapefile.scm
 	cp -a shapefile $(DESTDIR)/$(SITEDIR)/shapefile
 	install -m 644 -D -t $(DESTDIR)/$(PREFIX)/share/info/ $(INFO_FILES)
