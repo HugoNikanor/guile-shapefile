@@ -31,6 +31,8 @@ doesn't attempt @emph{do} anything with them (however, @xref{Examples})
 
 It currently doesn't support writing back to disk.
 
+@image{an_riks}
+
 @c @menu
 @c * shapefile::
 @c @c * copying::
@@ -404,6 +406,27 @@ kyrkor, slott och fyrer
 @item hl
 vattendrag
 @end table
+
+@node Contributing and To-Do
+@chapter Contributing and To-Do
+@cindex TODO
+@cindex Contributing
+@cindex to-do
+
+Contributions are more than welcome.
+
+Easiest way to contribute is through GitHub at 
+@url{https://github.com/HugoNikanor/guile-shapefile/,HugoNikanor/guile-shapefile}.
+
+Some things which would be nice to have are:
+
+@itemize
+@item
+Remaining file extensions
+
+@item
+Ability to write shapefiles
+@end itemize
 
 @node Index
 @unnumbered Index
