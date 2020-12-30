@@ -351,7 +351,12 @@ Exported by @code{(shapefile shp)}. Used for bounding boxes.
 @node Examples
 @chapter Examples
 
-@node Lantmäteriet
+Some code examples can be found on the projcets
+@url{https://github.com/HugoNikanor/guile-shapefile/tree/master/examples,GitHub page}.
+
+Sample data can be fetched from Lantämteriet.
+
+@c @node Lantmäteriet
 @section Lantmäteriet
 
 @c TODO copyright (CC) notice
@@ -359,53 +364,7 @@ Exported by @code{(shapefile shp)}. Used for bounding boxes.
 Some example data can be fetched from the Swedish National Land Survey (Lantmäteriet).
 @url{https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/sverigekartor/}
 
-@table @samp
-@item my
-markyta
-
-@item ak
-kommuner
-
-@item ny
-nationalpark (yta?)
-
-@item nl
-nationalpark
-
-@item tx
-text?
-
-@item al
-avgränsnare (linje)
-riksgräns, komungräns ...
-
-@item an
-län (area)
-
-@item bt
-
-
-@item jl
-järnvägar (linjer)
-
-@item ul
-odlingsgränser + fljälllinjer
-
-@item ml
-markyta (+ utomlands)
-
-@item vl
-vägar
-
-@item mb
-tätorter
-
-@item bs
-kyrkor, slott och fyrer
-
-@item hl
-vattendrag
-@end table
+The map on the cover is from GSD-Sverigekortor_vektor/1_milj/Sverige/Swereg_99_TM/shape/sv
 
 @node Contributing and To-Do
 @chapter Contributing and To-Do

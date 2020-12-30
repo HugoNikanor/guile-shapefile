@@ -26,5 +26,5 @@ Full documentation can be found in the [info file](guile-shapefile.texi), or
 Contributing
 ------------
 
-[//hugonikanor.github.io/guile-shapefile/Contributing-and-To_002dDo.html#Contributing-and-To_002dDo](See documentation for information about contributing)
+[See documentation for information about contributing](//hugonikanor.github.io/guile-shapefile/Contributing-and-To_002dDo.html#Contributing-and-To_002dDo).
 
