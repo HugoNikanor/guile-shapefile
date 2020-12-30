@@ -4,9 +4,12 @@
 @c TODO note module name for all parts
 
 @copying
-@c TODO licencse?
-
 Copyright @copyright{} 2020 Hugo Hörnquist
+
+Both the program and the accompanying documentation is available under
+the MIT license, included below.
+
+@include LICENSE
 @end copying
 
 @titlepage
@@ -38,6 +41,10 @@ It currently doesn't support writing back to disk.
 @c @c * copying::
 @c * index::
 @c @end menu
+
+@node LICENSE
+@unnumbered LICENSE
+@insertcopying
 
 @node Shapefile
 @chapter Shapefile
@@ -358,6 +365,7 @@ Sample data can be fetched from Lantämteriet.
 
 @c @node Lantmäteriet
 @section Lantmäteriet
+@anchor{Lantmäteriet}
 
 @c TODO copyright (CC) notice
 
@@ -385,6 +393,9 @@ Remaining file extensions
 
 @item
 Ability to write shapefiles
+
+@item
+Fix the prj parser. Currently it only works on some files.
 @end itemize
 
 @node Index
