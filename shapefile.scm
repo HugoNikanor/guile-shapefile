@@ -1,6 +1,6 @@
 (define-module (shapefile)
   :use-module (shapefile shp)
-  :use-module (shapefile dbase)
+  :use-module (shapefile dbf)
   :use-module (shapefile cpg)
   :use-module (shapefile prj)
 

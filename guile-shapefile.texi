@@ -293,8 +293,8 @@ and returns transcoder depending on its finds.  Defaults to Latin-1.
 @section dbf - Database
 @cindex dbf
 
-Module @code{(shapefile dbase)}.
-@cindex (shapefile dbase)
+Module @code{(shapefile dbf)}.
+@cindex (shapefile dbf)
 
 Contains auxiliary information about the shapes in the shp file. With
 one record per shape.

@@ -1,7 +1,7 @@
 ;;; https://www.dbase.com/Knowledgebase/INT/db7_file_fmt.htm
 ;; http://web.archive.org/web/20150323061445/http://ulisse.elettra.trieste.it/services/doc/dbase/DBFstruct.htm
 
-(define-module (shapefile dbase)
+(define-module (shapefile dbf)
   :use-module (shapefile internal common)
   :use-module ((rnrs io ports)
                :select (bytevector->string
