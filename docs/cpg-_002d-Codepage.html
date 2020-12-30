@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2020 Hugo Hörnquist -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>cpg - Codepage (Guile Shapefile)</title>
+
+<meta name="description" content="cpg - Codepage (Guile Shapefile)">
+<meta name="keywords" content="cpg - Codepage (Guile Shapefile)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html" rel="start" title="Top">
+<link href="Index.html" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Shapefile.html" rel="up" title="Shapefile">
+<link href="dbf-_002d-Database.html" rel="next" title="dbf - Database">
+<link href="prj-_002d-Projection-Information.html" rel="prev" title="prj - Projection Information">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<span id="cpg-_002d-Codepage"></span><div class="header">
+<p>
+Next: <a href="dbf-_002d-Database.html" accesskey="n" rel="next">dbf - Database</a>, Previous: <a href="prj-_002d-Projection-Information.html" accesskey="p" rel="prev">prj - Projection Information</a>, Up: <a href="Shapefile.html" accesskey="u" rel="up">Shapefile</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="cpg-_002d-Codepage-1"></span><h3 class="section">1.4 cpg - Codepage</h3>
+<span id="index-cpg"></span>
+
+<p>The codepage for the dbf file.
+</p>
+<dl>
+<dt id="index-parse_002dcpg_002dfile">Function: <strong>parse-cpg-file</strong> <em>port</em></dt>
+<dd><p>Reads name of a codepage from <var>port</var>, and resolves it with
+<code>resolve-codepage</code>. Returns a <code>(rnrs io ports)</code> transcoder.
+</p></dd></dl>
+
+<dl>
+<dt id="index-resolve_002dcodepage">Function: <strong>resolve-codepage</strong> <em>name</em></dt>
+<dd><span id="index-transcoder"></span>
+<p>Returns a <code>(rnrs io ports)</code> transcoder.
+</p>
+<p>Checks if string <var>name</var> contains &ldquo;ISO 8859&rdquo;, &ldquo;UTF 16&rdquo;, or &ldquo;UTF 8&rdquo;,
+and returns transcoder depending on its finds.  Defaults to Latin-1.
+</p></dd></dl>
+
+
+
+
+</body>
+</html>

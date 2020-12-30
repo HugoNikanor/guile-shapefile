@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2020 Hugo Hörnquist -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>shp - Shape Data (Guile Shapefile)</title>
+
+<meta name="description" content="shp - Shape Data (Guile Shapefile)">
+<meta name="keywords" content="shp - Shape Data (Guile Shapefile)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html" rel="start" title="Top">
+<link href="Index.html" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Shapefile.html" rel="up" title="Shapefile">
+<link href="shx-_002d-Shape-Index.html" rel="next" title="shx - Shape Index">
+<link href="Shapefile.html" rel="prev" title="Shapefile">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<span id="shp-_002d-Shape-Data"></span><div class="header">
+<p>
+Next: <a href="shx-_002d-Shape-Index.html" accesskey="n" rel="next">shx - Shape Index</a>, Up: <a href="Shapefile.html" accesskey="u" rel="up">Shapefile</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="shp-_002d-Shape-Data-1"></span><h3 class="section">1.1 shp - Shape Data</h3>
+<span id="index-shp"></span>
+
+<p>Each shape file contains a list of shapes. All shapes are of the same
+type (or the null shape).
+</p>
+<p>All shapes define the <code>make-<em>shape</em></code>,
+<code>parse-<em>shape</em></code>, and <code><em>shape</em>?</code>.
+<code>make-<em>shape</em></code> and <code><em>shape</em>?</code> are self
+explanatory. Each <code>parse-<em>shape</em></code> takes a bytevector, and a
+byte offset into that vector, and reads from the vector creating a
+shape. However, you usually don&rsquo;t want to call the parse procedures
+directly, but instead use
+</p>
+<dl>
+<dt id="index-parse_002dshp_002dfile">Function: <strong>parse-shp-file</strong> <em>port</em></dt>
+<dd><p>Reads shapedata from <var>port</var>. The data must start with a propper
+shp header.
+</p>
+<p>Returns a list of shapes, as defined below.
+</p></dd></dl>
+
+<p>The following generic procedures are also available, in lie of
+individual getters.
+</p>
+<dl>
+<dt id="index-get_002dbounding_002dbox">Function: <strong>get-bounding-box</strong> <em>shape</em></dt>
+<dd><p>Returns the (minimum?) bounding box for <var>shape</var>, which is any of
+the shape types which have a bounding box.
+</p>
+<p>See <a href="Rectangle.html">Rectangle</a>
+</p></dd></dl>
+
+<dl>
+<dt id="index-get_002dparts">Function: <strong>get-parts</strong> <em>shape</em></dt>
+<dd><p>For poly-lines and polygons, return the list of parts.
+</p>
+<p>For multi-points, return the list of points.
+</p></dd></dl>
+
+
+
+<span id="point-1"></span><h4 class="subsection">1.1.1 point</h4>
+
+<dl>
+<dt id="index-point">Data Type: <strong>point</strong> <em>x y</em></dt>
+<dd><span id="point"></span></dd></dl>
+
+<dl>
+<dt id="index-point_003f">Function: <strong>point?</strong> <em>point</em></dt>
+</dl>
+
+<dl>
+<dt id="index-make_002dpoint">Function: <strong>make-point</strong> <em>x y</em></dt>
+</dl>
+
+<dl>
+<dt id="index-point_002dx">Function: <strong>point-x</strong> <em>point</em></dt>
+</dl>
+
+<dl>
+<dt id="index-point_002dy">Function: <strong>point-y</strong> <em>point</em></dt>
+</dl>
+
+<dl>
+<dt id="index-parse_002dpoint">Function: <strong>parse-point</strong> <em>bytevector offset</em></dt>
+</dl>
+
+<span id="multi-point"></span><h4 class="subsection">1.1.2 multi point</h4>
+
+<dl>
+<dt id="index-multi_002dpoint">Data Type: <strong>multi-point</strong> <em>box points</em></dt>
+<dd><p>A group of points.
+<var>box</var> is the (minimum?) bounding box which all points lie within.
+<var>points</var> is a list of points. <a href="#point">point</a>
+</p></dd></dl>
+
+<dl>
+<dt id="index-parse_002dmulti_002dpoint">Function: <strong>parse-multi-point</strong> <em>bytevector offset</em></dt>
+</dl>
+
+<span id="poly_002dline-_0026-polygon"></span><h4 class="subsection">1.1.3 poly-line &amp; polygon</h4>
+
+<dl>
+<dt id="index-poly_002dline">Data Type: <strong>poly-line</strong> <em>box parts</em></dt>
+<dt id="index-polygon">Data Type: <strong>polygon</strong> <em>box parts</em></dt>
+<dd><p>Poly-lines and polygons are really similar structures.
+<var>box</var> is in both cases the (minimum?) bounding box containing
+all nodes of the shape.
+<var>parts</var> is a list of parts, where each part is a list of points.
+Each part is a connected series of points (draw lines between
+them). For polygons, the first and last point <em>must</em> be the same.
+</p>
+</dd></dl>
+
+<dl>
+<dt id="index-parse_002dpoly_002dline">Function: <strong>parse-poly-line</strong> <em>bytevector offset</em></dt>
+<dt id="index-parse_002dpolygon">Function: <strong>parse-polygon</strong> <em>bytevector offset</em></dt>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="shx-_002d-Shape-Index.html" accesskey="n" rel="next">shx - Shape Index</a>, Up: <a href="Shapefile.html" accesskey="u" rel="up">Shapefile</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

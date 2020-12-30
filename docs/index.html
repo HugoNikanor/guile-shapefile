@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2020 Hugo Hörnquist -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Top (Guile Shapefile)</title>
+
+<meta name="description" content="Top (Guile Shapefile)">
+<meta name="keywords" content="Top (Guile Shapefile)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="#Top" rel="start" title="Top">
+<link href="Index.html" rel="index" title="Index">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Shapefile.html" rel="next" title="Shapefile">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center">Guile Shapefile</h1>
+
+
+
+
+<span id="SEC_Contents"></span>
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="no-bullet">
+  <li><a id="toc-Shapefile-1" href="Shapefile.html#Shapefile">1 Shapefile</a>
+  <ul class="no-bullet">
+    <li><a id="toc-shp-_002d-Shape-Data-1" href="shp-_002d-Shape-Data.html#shp-_002d-Shape-Data">1.1 shp - Shape Data</a>
+    <ul class="no-bullet">
+      <li><a id="toc-point-1" href="shp-_002d-Shape-Data.html#point-1">1.1.1 point</a></li>
+      <li><a id="toc-multi-point" href="shp-_002d-Shape-Data.html#multi-point">1.1.2 multi point</a></li>
+      <li><a id="toc-poly_002dline-_0026-polygon" href="shp-_002d-Shape-Data.html#poly_002dline-_0026-polygon">1.1.3 poly-line &amp; polygon</a></li>
+    </ul></li>
+    <li><a id="toc-shx-_002d-Shape-Index-1" href="shx-_002d-Shape-Index.html#shx-_002d-Shape-Index">1.2 shx - Shape Index</a></li>
+    <li><a id="toc-prj-_002d-Projection-Information-1" href="prj-_002d-Projection-Information.html#prj-_002d-Projection-Information">1.3 prj - Projection Information</a></li>
+    <li><a id="toc-cpg-_002d-Codepage-1" href="cpg-_002d-Codepage.html#cpg-_002d-Codepage">1.4 cpg - Codepage</a></li>
+    <li><a id="toc-dbf-_002d-Database-1" href="dbf-_002d-Database.html#dbf-_002d-Database">1.5 dbf - Database</a></li>
+  </ul></li>
+  <li><a id="toc-Other-1" href="Other.html#Other">2 Other</a>
+  <ul class="no-bullet">
+    <li><a id="toc-Rectangle-1" href="Rectangle.html#Rectangle">2.1 Rectangle</a></li>
+  </ul></li>
+  <li><a id="toc-Examples-1" href="Examples.html#Examples">3 Examples</a>
+  <ul class="no-bullet">
+    <li><a id="toc-Lantmateriet" href="Lantmateriet.html#Lantm_00e4teriet">3.1 Lantmäteriet</a></li>
+  </ul></li>
+  <li><a id="toc-Contributing-and-To_002dDo-1" href="Contributing-and-To_002dDo.html#Contributing-and-To_002dDo">4 Contributing and To-Do</a></li>
+  <li><a id="toc-Index-1" href="Index.html#Index" rel="index">Index</a></li>
+</ul>
+</div>
+
+
+<span id="Top"></span><div class="header">
+<p>
+ &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Guile-Shapefile"></span><h1 class="top">Guile Shapefile</h1>
+
+<p>Guile shapefile attempts to read and parse shapefile. As a library, it
+doesn&rsquo;t attempt <em>do</em> anything with them (however, See <a href="Examples.html">Examples</a>)
+</p>
+<p>It currently doesn&rsquo;t support writing back to disk.
+</p>
+<img src="an_riks.png" alt="an_riks">
+
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Shapefile.html" accesskey="1">Shapefile</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Other.html" accesskey="2">Other</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Examples.html" accesskey="3">Examples</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Contributing-and-To_002dDo.html" accesskey="4">Contributing and To-Do</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Index.html" rel="index" accesskey="5">Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+ &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

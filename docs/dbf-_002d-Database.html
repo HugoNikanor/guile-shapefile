@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2020 Hugo Hörnquist -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>dbf - Database (Guile Shapefile)</title>
+
+<meta name="description" content="dbf - Database (Guile Shapefile)">
+<meta name="keywords" content="dbf - Database (Guile Shapefile)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html" rel="start" title="Top">
+<link href="Index.html" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Shapefile.html" rel="up" title="Shapefile">
+<link href="Other.html" rel="next" title="Other">
+<link href="cpg-_002d-Codepage.html" rel="prev" title="cpg - Codepage">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<span id="dbf-_002d-Database"></span><div class="header">
+<p>
+Previous: <a href="cpg-_002d-Codepage.html" accesskey="p" rel="prev">cpg - Codepage</a>, Up: <a href="Shapefile.html" accesskey="u" rel="up">Shapefile</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="dbf-_002d-Database-1"></span><h3 class="section">1.5 dbf - Database</h3>
+<span id="index-dbf"></span>
+
+<p>Contains auxiliary information about the shapes in the shp file. With
+one record per shape.
+</p>
+<p>Wikipedia claims that the DBase files should be Version IV
+<a id="DOCF3" href="#FOOT3"><sup>3</sup></a>.
+The files I have however all use DBase version 3, therefor that is
+what is supported in the code.
+</p>
+<dl>
+<dt id="index-load_002ddbase_002dfile">Function: <strong>load-dbase-file</strong> <em>port transcoder</em></dt>
+<dd><p><var>port</var> is an open input port which the data will be read from.
+<var>transcoder</var> is an <code>(rnrs io base)</code> transcoder, which
+signifies which charset the data has.
+</p>
+<p>Returns two values.
+A list of field descriptors See <a href="#field_002ddescriptor_002dv3">field-descriptor-v3</a>, and
+a vector of records.
+</p></dd></dl>
+
+<p>Each record is a list list on the form <code>(bool data ...)</code>, where
+<var>bool</var> is whether or not the record is removed (<code>#t</code> for
+removed, <code>#f</code> if still there). The remaining data fields
+corresponds directly to the fields in the field descriptor list.
+</p>
+<p>However, usually you don&rsquo;t want to deal with the data that way.
+</p>
+<dl>
+<dt id="index-dbase_002dbuild_002dassoc_002dlist">Function: <strong>dbase-build-assoc-list</strong> <em>dbf-headers dbf-record-vector</em></dt>
+<dd>
+<p>Takes the headers and data returned by <code>load-dbase-file</code>, and
+instead returns a list of association lists. One assoc list per
+record (leading boolean removed), with the <code>car</code>s being the field
+names as symbols, and the <code>cdr</code>s being the values.
+</p>
+<p>Example:
+</p><div class="lisp">
+<pre class="lisp">(call-with-values (λ () (load-dbase-file port transcoder))
+  dbase-build-assoc-list)
+</pre></div>
+</dd></dl>
+
+<p>Dynamically defining record types, and returning instances would be
+fancier. However, the utilities for record introspection are lacking,
+leading to the programmer needing to know the form of the generated
+records beforehand, defeating the point.
+</p>
+<dl>
+<dt id="index-field_002ddescriptor_002dv3">Data Type: <strong>field-descriptor-v3</strong> <em>name type length decimal-count work-area-id set-fields-flag</em></dt>
+<dd><span id="field_002ddescriptor_002dv3"></span><p><var>name</var> is the name of the field.
+<var>type</var> signifies the type of the field, usually unneeded since the
+values are converted to proper scheme types when reading.
+See some official reference for proper information.
+</p></dd></dl>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h5><a id="FOOT3" href="#DOCF3">(3)</a></h3>
+<p><a href="https://en.wikipedia.org/wiki/Shapefile#Shapefile_attribute_format_(.dbf)">https://en.wikipedia.org/wiki/Shapefile#Shapefile_attribute_format_(.dbf)</a></p>
+</div>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="cpg-_002d-Codepage.html" accesskey="p" rel="prev">cpg - Codepage</a>, Up: <a href="Shapefile.html" accesskey="u" rel="up">Shapefile</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

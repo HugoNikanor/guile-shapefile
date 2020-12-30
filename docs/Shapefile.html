@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+Copyright (C) 2020 Hugo Hörnquist -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Shapefile (Guile Shapefile)</title>
+
+<meta name="description" content="Shapefile (Guile Shapefile)">
+<meta name="keywords" content="Shapefile (Guile Shapefile)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="index.html" rel="start" title="Top">
+<link href="Index.html" rel="index" title="Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="shp-_002d-Shape-Data.html" rel="next" title="shp - Shape Data">
+<link href="index.html" rel="prev" title="Top">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<span id="Shapefile"></span><div class="header">
+<p>
+Next: <a href="Other.html" accesskey="n" rel="next">Other</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Shapefile-1"></span><h2 class="chapter">1 Shapefile</h2>
+
+<span id="index-shapefile"></span>
+
+<p>Each shapefile is spread over a number of different files, each
+containing part of the whole data. More information can be found on
+<a href="https://en.wikipedia.org/wiki/Shapefile">Wikipedia</a> and in the
+<a href="https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf">whitepaper</a>.
+</p>
+<p>The main interface for loading shapefiles is
+</p>
+<dl>
+<dt id="index-read_002dshapefile">Function: <strong>read-shapefile</strong> <em>path</em></dt>
+<dd><p><var>path</var> is a search path without an extension. This due to the data
+being spread over multiple files.
+Returns a <code>shapefile</code> object.
+</p>
+<p>The shp and dbf files are <em>required</em> to exist
+<a id="DOCF1" href="#FOOT1"><sup>1</sup></a>
+</p></dd></dl>
+
+<dl>
+<dt id="index-shapefile-1">Data Type: <strong>shapefile</strong> <em>transcoder projection records</em></dt>
+<dd><span id="shapefile"></span><p><var>transcoder</var> and <var>projection</var> is the data from the cpg and prj
+files read directly as noted in <a href="cpg-_002d-Codepage.html">cpg - Codepage</a> and <a href="prj-_002d-Projection-Information.html">prj - Projection Information</a>.
+</p>
+<p><var>records</var> is a list of <code>record</code> records.
+</p></dd></dl>
+
+<dl>
+<dt id="index-shapefile_003f">Function: <strong>shapefile?</strong> <em>shapefile</em></dt>
+</dl>
+
+<dl>
+<dt id="index-shapefile_002dtranscoder">Function: <strong>shapefile-transcoder</strong> <em>shapefile</em></dt>
+</dl>
+
+<dl>
+<dt id="index-shapefile_002dprojection">Function: <strong>shapefile-projection</strong> <em>shapefile</em></dt>
+</dl>
+
+<dl>
+<dt id="index-shapefile_002drecords">Function: <strong>shapefile-records</strong> <em>shapefile</em></dt>
+</dl>
+
+<dl>
+<dt id="index-create_002dshapefile">Function: <strong>create-shapefile</strong> <em>[#:transcoder] [#:projection] [#:records]</em></dt>
+<dd><p>Alternative constructor to the &ldquo;regular&rdquo; <code>make-shapefile</code>.
+Each keyword argument is optional, and defaults to <code>#f</code>. No
+responsibility is taken if <em>someonee</em> were to create a shapefile
+without a records list.
+</p>
+</dd></dl>
+
+<dl>
+<dt id="index-record">Data Type: <strong>record</strong> <em>shape data</em></dt>
+<dd><p><var>shape</var> is a shape record as read from the shp file.
+<var>data</var> Is a dbf record, as read from the dbf file.
+</p></dd></dl>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="shp-_002d-Shape-Data.html" accesskey="1">shp - Shape Data</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="shx-_002d-Shape-Index.html" accesskey="2">shx - Shape Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="prj-_002d-Projection-Information.html" accesskey="3">prj - Projection Information</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="cpg-_002d-Codepage.html" accesskey="4">cpg - Codepage</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="dbf-_002d-Database.html" accesskey="5">dbf - Database</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h5><a id="FOOT1" href="#DOCF1">(1)</a></h3>
+<p>The shx file is also required by the spec to exist,
+              but here we ignore it</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Other.html" accesskey="n" rel="next">Other</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
