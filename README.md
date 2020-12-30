@@ -4,6 +4,9 @@ Guile Shapefile
 Guile Shapefile is a Guile library for reading
 [shapefiles](https://en.wikipedia.org/wiki/Shapefile).
 
+Available in the AUR as
+[guile-shapefile](https://aur.archlinux.org/packages/guile-shapefile/).
+
 Examples
 --------
 
