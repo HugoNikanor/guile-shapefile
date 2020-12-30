@@ -1,4 +1,4 @@
-.PHONY: all clean install test docs
+.PHONY: all clean install test docs for-package
 
 GUILE_CONFIG := guile-config
 
@@ -22,11 +22,13 @@ all: $(INFO_FILES) docs
 clean:
 	-rm -r ccache
 
+for-package: $(GO_FILES) $(INFO_FILES)
+
 install: $(GO_FILES) $(INFO_FILES)
 	install -d $(DESTDIR)/$(CCACHEDIR)/
-	rsync -a ccache/ $(DESTDIR)/$(CCACHEDIR)/
+	cp -a ccache/ $(DESTDIR)/$(CCACHEDIR)/
 	install -m 644 -D -t $(DESTDIR)/$(SITEDIR)/ shapefile.scm
-	rsync -a shapefile $(DESTDIR)/$(SITEDIR)/shapefile
+	cp -a shapefile $(DESTDIR)/$(SITEDIR)/shapefile
 	install -m 644 -D -t $(DESTDIR)/$(PREFIX)/share/info/ $(INFO_FILES)
 
 ccache/%.go: %.scm
