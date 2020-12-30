@@ -1,2 +1,23 @@
+Guile Shapefile
+===============
 
-http://help.arcgis.com/en/arcgisdesktop/10.0/help/index.html#/Shapefile_file_extensions/005600000003000000/
+Guile Shapefile is a Guile library for reading
+[shapefiles](https://en.wikipedia.org/wiki/Shapefile).
+
+Examples
+--------
+
+	env GUILE_LOAD_PATH=. examples/to-svg.scm \
+		--file riks/an_riks \
+		--height 300
+
+[![Swedish counties](an_riks.svg)](an_riks.svg)
+
+*Hover to show names doesn't work for inline image, click image to get
+interaction*
+
+Documentation
+-------------
+
+Full documentation can be found in the [info file](guile-shapefile.texi),
+including contributing information and stuff to do.
