@@ -19,5 +19,12 @@ interaction*
 Documentation
 -------------
 
-Full documentation can be found in the [info file](guile-shapefile.texi),
-including contributing information and stuff to do.
+Full documentation can be found in the [info file](guile-shapefile.texi), or
+[rendered as html](//hugonikanor.github.io/guile-shapefile/).
+
+
+Contributing
+------------
+
+[//hugonikanor.github.io/guile-shapefile/Contributing-and-To_002dDo.html#Contributing-and-To_002dDo](See documentation for information about contributing)
+
