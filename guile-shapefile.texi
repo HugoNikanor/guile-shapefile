@@ -1,8 +1,6 @@
 \input texinfo
 @settitle Guile Shapefile
 
-@c TODO note module name for all parts
-
 @copying
 Copyright @copyright{} 2020 Hugo Hörnquist
 
@@ -48,8 +46,10 @@ It currently doesn't support writing back to disk.
 
 @node Shapefile
 @chapter Shapefile
-
 @cindex shapefile
+
+Module @code{(shapefile)}.
+@cindex (shapefile)
 
 Each shapefile is spread over a number of different files, each
 containing part of the whole data. More information can be found on
@@ -93,8 +93,6 @@ Alternative constructor to the ``regular'' @code{make-shapefile}.
 Each keyword argument is optional, and defaults to @code{#f}. No
 responsibility is taken if @emph{someonee} were to create a shapefile
 without a records list.
-
-@c TODO possibly give sensible befaults for transcoder and records.
 @end defun
 
 @deftp {Data Type} record shape data
@@ -105,6 +103,9 @@ without a records list.
 @node shp - Shape Data
 @section shp - Shape Data
 @cindex shp
+
+Module @code{(shapefile shp)}.
+@cindex (shapefile shp)
 
 Each shape file contains a list of shapes. All shapes are of the same
 type (or the null shape).
@@ -180,15 +181,13 @@ A group of points.
 
 @deffn {Data Type} poly-line box parts
 @deffnx {Data Type} polygon box parts
+@anchor{polygon}
 Poly-lines and polygons are really similar structures.
 @var{box} is in both cases the (minimum?) bounding box containing
 all nodes of the shape.
 @var{parts} is a list of parts, where each part is a list of points.
 Each part is a connected series of points (draw lines between
 them). For polygons, the first and last point @emph{must} be the same.
-
-@c TODO multiple parts. Clockwise vs counter clockwise
-@c Union vs difference.
 @end deffn
 
 @deffn {Function} parse-poly-line bytevector offset
@@ -199,6 +198,9 @@ them). For polygons, the first and last point @emph{must} be the same.
 @section shx - Shape Index
 @cindex shx
 
+Module @code{(shapefile shx)}.
+@cindex (shapefile shx)
+
 Index file with fixed width records for the accompanying shp file
 (which has variable width records). A parser is provided, but goes
 unused in the code.
@@ -206,6 +208,9 @@ unused in the code.
 @node prj - Projection Information
 @section prj - Projection Information
 @cindex prj
+
+Module @code{(shapefile prj)}.
+@cindex (shapefile prj)
 
 The @code{prj} files contains information about the map projection.
 
@@ -266,6 +271,9 @@ Reads projection data from port, returing sexp as above.
 @section cpg - Codepage
 @cindex cpg
 
+Module @code{(shapefile cpg)}.
+@cindex (shapefile cpg)
+
 The codepage for the dbf file.
 
 @defun parse-cpg-file port
@@ -284,6 +292,9 @@ and returns transcoder depending on its finds.  Defaults to Latin-1.
 @node dbf - Database
 @section dbf - Database
 @cindex dbf
+
+Module @code{(shapefile dbase)}.
+@cindex (shapefile dbase)
 
 Contains auxiliary information about the shapes in the shp file. With
 one record per shape.
@@ -367,10 +378,12 @@ Sample data can be fetched from Lantämteriet.
 @section Lantmäteriet
 @anchor{Lantmäteriet}
 
-@c TODO copyright (CC) notice
-
 Some example data can be fetched from the Swedish National Land Survey (Lantmäteriet).
+The data is licensed under Creative Commons CC0, which allows us to do
+anything with it.
 @url{https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/sverigekartor/}
+
+
 
 The map on the cover is from GSD-Sverigekortor_vektor/1_milj/Sverige/Swereg_99_TM/shape/sv
 
@@ -396,6 +409,11 @@ Ability to write shapefiles
 
 @item
 Fix the prj parser. Currently it only works on some files.
+
+@item
+Polygons are ``positive'' or ``negative'' depending on if the points
+move in a clockwise or counter clockwise direction. Implement this
+(possibly adding a extra field to the component type). @ref{polygon}.
 @end itemize
 
 @node Index

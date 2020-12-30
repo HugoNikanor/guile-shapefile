@@ -33,6 +33,7 @@
           ))
 (create-printer shapefile)
 
+;; TODO possibly give sensible befaults for transcoder and records.
 (define* (create-shapefile
           #:key
           transcoder projection records)
