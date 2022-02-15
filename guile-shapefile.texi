@@ -10,6 +10,11 @@ the MIT license, included below.
 @include LICENSE
 @end copying
 
+@dircategory The Algorithmic Language Scheme
+@direntry
+* Guile Shapefile: (guile-shapefile).   Parse shapefiles in Guile
+@end direntry
+
 @titlepage
 @title Guile Shapefile
 @author Hugo Hörnquist
